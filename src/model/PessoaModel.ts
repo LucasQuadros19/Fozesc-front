@@ -1,8 +1,9 @@
 import { AbstractEntity } from "./AbstractEntity"
-export class CondutorModel extends AbstractEntity {
+import { Bancos } from "./Bancos"
+export class PessoaModel extends AbstractEntity {
     nome!:String
-    cpf!:String
-    telefone!:String
-    tempoPago!:Number
-    tempoDesconto!:Number
+    cpfCnpj!:String
+    numeroDoc!:String
+    banco!:Bancos
+    permissao!: boolean
 }
