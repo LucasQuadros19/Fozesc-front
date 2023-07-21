@@ -1,20 +1,20 @@
 import axios, { AxiosInstance } from "axios";
-import { CondutorModel } from "@/model/CondutorModel";
+import { PessoaModel } from "@/model/PessoaModel";
 
-class CondutorClient {
+class PessoaClient {
   private axiosClient: AxiosInstance;
 
   constructor() {
     this.axiosClient = axios.create({
-      baseURL: 'http://localhost:8081/api/condutor',
+      baseURL: 'http://localhost:8081/api/pessoa',
       headers: { 'Content-type': 'application/json' }
     });
   }
 
 
-  public async findById(id: number): Promise<CondutorModel> {
+  public async findById(id: number): Promise<PessoaModel> {
     try {
-      return (await this.axiosClient.get<CondutorModel>(`/lista/id/${id}`)).data;
+      return (await this.axiosClient.get<PessoaModel>(`/lista/id/${id}`)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -22,13 +22,13 @@ class CondutorClient {
 
   public async listaAll(): Promise<any> {
     try {
-      return (await this.axiosClient.get<CondutorModel[]>(`/lista`)).data;
+      return (await this.axiosClient.get<PessoaModel[]>(`/lista`)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
   }
 
-  public async cadastrar(cadastro: CondutorModel): Promise<string> {
+  public async cadastrar(cadastro: PessoaModel): Promise<string> {
     try {
       return (await this.axiosClient.post<string>(`/cadastrar`, cadastro)).data;
     } catch (error: any) {
@@ -36,7 +36,7 @@ class CondutorClient {
     }
   }
 
-  public async editar(id: number, editar: CondutorModel): Promise<string> {
+  public async editar(id: number, editar: PessoaModel): Promise<string> {
     try {
       return (await this.axiosClient.put<string>(`/${id}`, editar)).data;
     } catch (error: any) {
@@ -53,4 +53,4 @@ class CondutorClient {
   }
 }
 
-export default new CondutorClient();
+export default new PessoaClient();
