@@ -1,10 +1,21 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <Nav/>
+ 
   <router-view/>
 </template>
+<script lang="ts">
+import { defineComponent } from 'vue';
+import Nav from '../src/components/Nav.vue'
+export default defineComponent({
+  components: {
+    Nav
+  },
+  setup() {
+
+  }
+});
+</script>
+
 
 <style lang="scss">
 
