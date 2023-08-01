@@ -1,16 +1,17 @@
 <template>
     <Cliente/>
-    <Informacao/>
-    
+    <ClienteDados/>
 </template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'; 
-import Informacao from '../components/Informacao.vue'
+import ClienteDados from '../components/ClienteDados.vue'
 import Cliente from '../components/Cliente.vue'
+
 
 export default defineComponent({
     components:{
-        Informacao,
+        ClienteDados,
         Cliente
 
     },
@@ -19,5 +20,3 @@ export default defineComponent({
     },
 })
 </script>
-
-
