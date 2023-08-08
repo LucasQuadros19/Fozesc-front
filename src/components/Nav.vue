@@ -20,7 +20,9 @@
         </li>
         <li class="nav-item">
 <router-link class="nav-link active" aria-current="page" to="/operacaoView">Operacao</router-link>
-        </li>              
+
+        </li>
+              
           </ul>          
         </div>
       </div>

@@ -20,6 +20,14 @@ class HistoricoClient {
     }
   }
 
+  public async getParcelasByOperacao(id: number): Promise<HistoricoModel[]> {
+    try {
+      return (await this.axiosClient.get<HistoricoModel[]>(`/lista/Parcela/${id}`)).data;
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+
   public async listaAll(): Promise<any> {
     try {
       return (await this.axiosClient.get<HistoricoModel[]>(`/lista`)).data;

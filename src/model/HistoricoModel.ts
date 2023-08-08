@@ -1,8 +1,7 @@
 import { AbstractEntity } from "./AbstractEntity"
-import { EmprestimoModel } from "./EmprestimoModel"
-import { PessoaModel } from "./PessoaModel"
+import { OperacaoModel } from "./OperacaoModel"
 export class HistoricoModel extends AbstractEntity {
-    cliente!:PessoaModel
-    emprestimo!:EmprestimoModel
+    operacao!:OperacaoModel
+
 
 }

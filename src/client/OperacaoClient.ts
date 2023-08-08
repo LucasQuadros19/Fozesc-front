@@ -20,6 +20,14 @@ class OperacaoClient {
     }
   }
 
+  public async getOperacaoByPessoa(id: number): Promise<OperacaoModel[]> {
+    try {
+      return (await this.axiosClient.get<OperacaoModel[]>(`/lista/cliente/${id}`)).data;
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+
   public async listaAll(): Promise<any> {
     try {
       return (await this.axiosClient.get<OperacaoModel[]>(`/lista`)).data;

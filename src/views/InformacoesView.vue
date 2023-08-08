@@ -1,17 +1,16 @@
 <template>
-    <Cliente/>
+
     <Informacao/>
     
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'; 
 import Informacao from '../components/Informacao.vue'
-import Cliente from '../components/Cliente.vue'
+
 
 export default defineComponent({
     components:{
-        Informacao,
-        Cliente
+        Informacao
 
     },
     setup() {

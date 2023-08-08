@@ -1,7 +1,32 @@
 <template>
-    <div class="row">
-      <!-- Left column -->
-      <div class="col-md-9">
+  <div v-if="selectedItems.length > 0" class="container" style="margin-top: 10px">
+    <!-- Displayed once -->
+    <div class="row d-flex align-items-center">
+      <div class="col-md-2 text-start">
+        <router-link
+          type="button"
+          class=""
+          :to="{ name: 'informacoesView', query: { id: selectedItems[0].id } }"
+        >
+          <p class="fs-2">{{ selectedItems[0].status.limite.cliente.nome }}</p>
+        </router-link>
+      </div>
+      <div class="col-md-2 text-start">
+        <p class="fs-4">{{ selectedItems[0].status.limite.cliente.cpfCnpj }}</p>
+      </div>
+      <div class="col-md-2 text-start">
+        <p class="fs-1">{{ selectedItems[0].status.limite.cliente.numeroDoc }}</p>
+      </div>
+      <div class="col-md-2 text-start">
+        <p class="fs-1">{{ selectedItems[0].status.limite.cliente.banco }}</p>
+      </div>
+    <div class="col-md-2">
+      <div class="d-grid gap-2">
+
+      </div>
+    </div>
+  </div>
+    
         
         <div class="container" style="margin-top: 10px">
           <div class="row">
@@ -10,23 +35,7 @@
             </div>
             <div class="col-md-1">
               <div class="d-grid gap-2">
-                <router-link
-                  type="button"
-                  class="btn btn-success"
-                  to="/propriedade/formulario"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-house-add"
-                    viewBox="0 0 16 16"
-                  >
-
-                  </svg>
-                </router-link>
-
+            
               </div>
             </div>
           </div>
@@ -44,45 +53,70 @@
                     <th scope="col">Opção</th>
                   </tr>
                 </thead>
-                <tbody class="table-group-divider">
-                  <tr>
-                    <td class="text-start">id</td>
-                    <td class="text-start">00/00/0000</td>
-                    <td class="text-start">R$:1000.00</td>
-                    <td class="text-start">10x</td>
-                    <td class="text-start">Pix</td>
-                    <td ><span class="badge text-bg-success"> Finalizado </span></td>
+                <tbody  class="table-group-divider">
+                  <tr v-for="item in selectedItems" :key="item.id">
+                    <td class="text-start">{{item.id}}</td>
+                    <td class="text-start">{{ item.cadastro}}</td>
+                    <td class="text-start">{{item.emprestimo.valor}}</td>
+                    <td class="text-start">{{ item.emprestimo.quantidade }}</td>
+                    <td class="text-start">{{item.emprestimo.formaPaga}}</td>
+                    <td ><span class="badge text-bg-success"> {{item.ativo}} </span></td>
                     <td class="text-start">opcao</td>
                   </tr>
-                  <tr>
-                    <td class="text-start">id</td>
-                    <td class="text-start">00/00/0000</td>
-                    <td class="text-start">R$:1000.00</td>
-                    <td class="text-start">10x</td>
-                    <td class="text-start">Pix</td>
-                    <td ><span class="badge text-bg-info"> Ativa </span></td>
-                    <td class="text-start">opcao</td>
-                  </tr>
-                 
                 </tbody>
               </table>
             </div>
           </div>
         </div>
-      </div>
-  
-      <!-- Right column -->
-      <div class="col-md-3">
-        <H3>coluna direita</H3>
-        <H4>Limite</H4>
-      </div>
     </div>
   </template>
   
-  <script>
-  export default {};
-  </script>
   
+
+
+  <script lang="ts">
+import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
+import OperacaoClient from '@/client/OperacaoClient';
+import { OperacaoModel } from '@/model/OperacaoModel';
+
+export default defineComponent({
+  name: 'Parcelas',
+  data() {
+    return {
+      selectedItems: [] as OperacaoModel[],
+    };
+  },
+  mounted() {
+    this.findSelectedItems();
+  },
+  methods: {
+    findSelectedItems() {
+      const route = useRouter();
+      const id = route.currentRoute.value.query.id;
+
+      if (typeof id === 'string' && !isNaN(Number(id))) {
+        const numericId = Number(id);
+
+        OperacaoClient.getOperacaoByPessoa(numericId)
+          .then((success: OperacaoModel[]) => {
+            if (success.length > 0) {
+              this.selectedItems = success;
+              console.log("Dados da API:", this.selectedItems);
+            } else {
+              console.log("Nenhum dado encontrado na API.");
+            }
+          })
+          .catch((error) => {
+            console.log("Erro na API:", error);
+          });
+      } else {
+        console.error("Invalid ID:", id);
+      }
+    },
+  },
+});
+</script>
   <style>
 
   </style>
