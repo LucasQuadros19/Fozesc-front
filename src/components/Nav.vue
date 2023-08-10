@@ -22,7 +22,11 @@
 <router-link class="nav-link active" aria-current="page" to="/operacaoView">Operacao</router-link>
 
         </li>
-              
+        <li class="nav-item">
+<router-link class="nav-link active" aria-current="page" to="/pessoaForm">Pessoa</router-link>
+
+        </li>
+        
           </ul>          
         </div>
       </div>

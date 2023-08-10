@@ -22,6 +22,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('../views/InformacoesView.vue')
   },
   {
+    path: '/pessoaForm',
+    name: 'pessoaForm',
+
+    component: () => import('../views/PessoaFormView.vue')
+  },
+  {
     path: '/operacaoView',
     name: 'operacaoView',
 

@@ -8,18 +8,19 @@
           class=""
           :to="{ name: 'informacoesView', query: { id: selectedItems[0].id } }"
         >
-          <p class="fs-2">{{ selectedItems[0].status.limite.cliente.nome }}</p>
+          <p class="fs-3">{{ selectedItems[0].status.limite.cliente.nome }}</p>
         </router-link>
       </div>
       <div class="col-md-2 text-start">
         <p class="fs-4">{{ selectedItems[0].status.limite.cliente.cpfCnpj }}</p>
       </div>
       <div class="col-md-2 text-start">
-        <p class="fs-1">{{ selectedItems[0].status.limite.cliente.numeroDoc }}</p>
+        <p class="fs-3">{{ selectedItems[0].status.limite.cliente.numeroDoc }}</p>
       </div>
       <div class="col-md-2 text-start">
-        <p class="fs-1">{{ selectedItems[0].status.limite.cliente.banco }}</p>
+        <p class="fs-3">{{ selectedItems[0].status.limite.cliente.banco }}</p>
       </div>
+      <hr>
     <div class="col-md-2">
       <div class="d-grid gap-2">
 
@@ -61,7 +62,17 @@
                     <td class="text-start">{{ item.emprestimo.quantidade }}</td>
                     <td class="text-start">{{item.emprestimo.formaPaga}}</td>
                     <td ><span class="badge text-bg-success"> {{item.ativo}} </span></td>
-                    <td class="text-start">opcao</td>
+                    <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+
+<router-link
+type="button"
+class=""
+:to="{ name: 'operacaoView', query: {id: item.id} }"
+>
+opcao
+</router-link>
+</div>
+                    
                   </tr>
                 </tbody>
               </table>
@@ -69,6 +80,9 @@
           </div>
         </div>
     </div>
+    <div v-else class="container" style="margin-top: 10px">
+    <p class="fs-4">Nenhum dado encontrado na API.</p>
+  </div>
   </template>
   
   
