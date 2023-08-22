@@ -1,7 +1,6 @@
 import { AbstractEntity } from "./AbstractEntity"
-import { OperacaoModel } from "./OperacaoModel"
+import { PedidoModel } from "./PedidoModel"
 export class HistoricoModel extends AbstractEntity {
-    operacao!:OperacaoModel
-
-
+    operacao!:PedidoModel
+    proxPgamaneto!:Date
 }

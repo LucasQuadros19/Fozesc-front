@@ -10,8 +10,6 @@ class PedidoClient {
       headers: { 'Content-type': 'application/json' }
     });
   }
-
-
   public async findById(id: number): Promise<PedidoModel> {
     try {
       return (await this.axiosClient.get<PedidoModel>(`/lista/id/${id}`)).data;
@@ -19,7 +17,6 @@ class PedidoClient {
       return Promise.reject(error.response);
     }
   }
-
   public async listaAll(): Promise<any> {
     try {
       return (await this.axiosClient.get<PedidoModel[]>(`/lista`)).data;
@@ -27,10 +24,31 @@ class PedidoClient {
       return Promise.reject(error.response);
     }
   }
-
-  public async cadastrar(cadastro: PedidoModel): Promise<string> {
+  public async listarPedidosDoCliente(id: number): Promise<PedidoModel[]> {
     try {
-      return (await this.axiosClient.post<string>(`/cadastrar`, cadastro)).data;
+      return (await this.axiosClient.get<PedidoModel[]>(`/lista/cliente/${id}`)).data;
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+
+  public async cadastrarComposto(cadastro: PedidoModel): Promise<string> {
+    try {
+      return (await this.axiosClient.post<string>(`/cadastrar/composto`, cadastro)).data;
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+  public async cadastroSimples(cadastro: PedidoModel): Promise<string> {
+    try {
+      return (await this.axiosClient.post<string>(`/cadastra/simples`, cadastro)).data;
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+  public async cadastroDiario(cadastro: PedidoModel): Promise<string> {
+    try {
+      return (await this.axiosClient.post<string>(`/cadastra/diario`, cadastro)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }

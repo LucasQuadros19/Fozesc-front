@@ -8,17 +8,17 @@
           class=""
           :to="{ name: 'informacoesView', query: { id: selectedItems[0].id } }"
         >
-          <p class="fs-3">{{ selectedItems[0].status.limite.cliente.nome }}</p>
+          <p class="fs-3">{{ selectedItems[0].cliente.nome }}</p>
         </router-link>
       </div>
       <div class="col-md-2 text-start">
-        <p class="fs-4">{{ selectedItems[0].status.limite.cliente.cpfCnpj }}</p>
+        <p class="fs-4">{{ selectedItems[0].cliente.cpfCnpj }}</p>
       </div>
       <div class="col-md-2 text-start">
-        <p class="fs-3">{{ selectedItems[0].status.limite.cliente.numeroDoc }}</p>
+        <p class="fs-3">{{ selectedItems[0].cliente.numeroDoc }}</p>
       </div>
       <div class="col-md-2 text-start">
-        <p class="fs-3">{{ selectedItems[0].status.limite.cliente.banco }}</p>
+        <p class="fs-3">{{ selectedItems[0].cliente.banco }}</p>
       </div>
       <hr>
     <div class="col-md-2">
@@ -58,21 +58,21 @@
                   <tr v-for="item in selectedItems" :key="item.id">
                     <td class="text-start">{{item.id}}</td>
                     <td class="text-start">{{ item.cadastro}}</td>
-                    <td class="text-start">{{item.emprestimo.valor}}</td>
-                    <td class="text-start">{{ item.emprestimo.quantidade }}</td>
-                    <td class="text-start">{{item.emprestimo.formaPaga}}</td>
+                    <td class="text-start">{{item.valorLiquido}}</td>
+                    <td class="text-start">{{ item.quantidade }}</td>
+                    <td class="text-start">{{item.formaPaga}}</td>
                     <td ><span class="badge text-bg-success"> {{item.ativo}} </span></td>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
 
-<router-link
-type="button"
-class=""
-:to="{ name: 'operacaoView', query: {id: item.id} }"
->
-opcao
-</router-link>
-</div>
-                    
+                      <router-link
+                      type="button"
+                      class=""
+                      :to="{ name: 'operacaoView', query: {id: item.id} }"
+                      >
+                      opcao
+                      </router-link>
+                      </div>
+                                          
                   </tr>
                 </tbody>
               </table>
@@ -91,14 +91,14 @@ opcao
   <script lang="ts">
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-import OperacaoClient from '@/client/OperacaoClient';
-import { OperacaoModel } from '@/model/OperacaoModel';
+import PedidoClient from '@/client/PedidoClient';
+import { PedidoModel } from '@/model/PedidoModel';
 
 export default defineComponent({
   name: 'Parcelas',
   data() {
     return {
-      selectedItems: [] as OperacaoModel[],
+      selectedItems: [] as PedidoModel[],
     };
   },
   mounted() {
@@ -112,8 +112,8 @@ export default defineComponent({
       if (typeof id === 'string' && !isNaN(Number(id))) {
         const numericId = Number(id);
 
-        OperacaoClient.getOperacaoByPessoa(numericId)
-          .then((success: OperacaoModel[]) => {
+        PedidoClient.listarPedidosDoCliente(numericId)
+          .then((success: PedidoModel[]) => {
             if (success.length > 0) {
               this.selectedItems = success;
               console.log("Dados da API:", this.selectedItems);

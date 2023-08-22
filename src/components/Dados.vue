@@ -35,9 +35,9 @@
     <tr>
       <td>{{ item.id }}</td>
       <td>{{ item.vencimento }}</td>
-      <td class="text-start">{{ item.status.limite.cliente.nome }}</td>
-      <td class="text-end">{{ item.status.limite.cliente.numeroDoc }}</td>
-      <td class="text-start">{{ item.status.limite.cliente.banco }}</td>
+      <td class="text-start">{{ item.cliente.nome}}</td>
+      <td class="text-end">{{ item.cliente.numeroDoc }}</td>
+      <td class="text-start">{{ item.cliente.banco }}</td>
       <td class="text-start">{{ item.situacao }}</td>
       <td class="text-start">{{ item.observacao }}</td>
               <td>
@@ -71,15 +71,15 @@ historico
   
   <script lang="ts">
     import { defineComponent } from 'vue';
-  import OperacaoClient from '@/client/OperacaoClient';
-  import { OperacaoModel } from '@/model/OperacaoModel';
+  import PedidoClient from '@/client/PedidoClient';
+  import { PedidoModel } from '@/model/PedidoModel';
   import {useDateFormat} from "@vueuse/core";
   
   export default defineComponent({
     name: 'Lista',
     data() {
       return {
-        List: new Array<OperacaoModel>()
+        List: new Array<PedidoModel>()
       };
     },
     mounted() {
@@ -87,7 +87,7 @@ historico
     },
     methods: {
       findAll() {
-        OperacaoClient.listaAll()
+        PedidoClient.listaAll()
           .then(success => {
             this.List = success;
           })
