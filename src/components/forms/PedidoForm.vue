@@ -103,12 +103,25 @@
           </form>
         </div>
       </div>
+      <div class="col-md-2 offset-md-3">
+        <div class="card bg-light mb-3" style="max-width: 18rem;">
+ 
+  <div class="card-body">
+    <h5 v-if="form === 'composto'"  class="card-title">Total=R${{calculoComposto().resultado.toFixed(2)}}</h5>
+    <p v-if="form === 'composto'"  class="card-text">Parcela=R${{calculoComposto().parcela.toFixed(2)}}</p>
+    <h5  v-if="form === 'simples'" class="card-title">Total=R${{calculoSimples().total.toFixed(2)}}</h5>
+    <p  v-if="form === 'simples'" class="card-text">Parcela=R${{calculoSimples().parcela.toFixed(2)}}</p>
+  </div>
+</div>
+</div>
       <div class="row">
+        
         <div class="col-md-2 offset-md-6">
         </div>
         <div class="col-md-2">
+          
           <div class="d-grid gap-2">
-            {{  calculo()}}
+            
             <button v-if="form === 'diario'" type="button" class="btn btn-secondary" @click="onClickCadastrarDiario()">diario</button>
             <button v-if="form === 'composto'" type="button" class="btn btn-secondary" @click="onClickCadastrarComposto()">composto</button>
             <button v-if="form === 'simples'" type="button" class="btn btn-secondary" @click="onClickCadastrarSimples()">simples</button>
@@ -133,12 +146,16 @@ import { Forma } from '@/model/Forma';
 import { Destino } from '@/model/Destino';
 import { Situacao } from '@/model/Situacao';
 import { defineComponent } from 'vue';
+import { useToNumber } from '@vueuse/core';
 
 
 export default defineComponent({
   name: 'PedidoForm',
   data() {
     return {
+      valorDoc: 0,
+        juros: 0,    
+        quantidade: 0,
       resultado: 0,
         pedido: new PedidoModel(),
         PessoaList: [],
@@ -303,26 +320,44 @@ export default defineComponent({
       .catch(error=>{console.log(error);})
 
     },
-    calculo(){/*
-
-      let valorInicial:number  = this.pedido.valorDoc;
-      let jurosInt:number  = this.pedido.juros;
-      let quantidade:number = this.pedido.quantidade;
-      let jurosDecimal:number = jurosInt / 100.0;
-  let resultado:number  = valorInicial;
+    calculoComposto() {
+  let valorInicial: number = Number(this.pedido.valorDoc);
+  let jurosInt: number = Number(this.pedido.juros);
+  let quantidade: number = Number(this.pedido.quantidade);
+  let jurosDecimal: number = jurosInt / 100.0;
+  let resultado: number = valorInicial;
+  
+  if (isNaN(valorInicial) || isNaN(jurosInt) || isNaN(quantidade)) {
+    console.error('Valores inválidos para cálculo.');
+    return { resultado: 0, parcela: 0 }; 
+  }
 
   for (let i: number = 0; i < quantidade; i++) {
-    let valorJuros:number = resultado * jurosDecimal;
-    resultado = +(+resultado + valorJuros);
-    
+    let valorJuros: number = resultado * jurosDecimal;
+    resultado = resultado + valorJuros;
     console.log(resultado);
-
   }
-    this.resultado = resultado;
-    return resultado;
-    */
-    }
 
+  let parcela = resultado/quantidade;
+  
+
+  return { resultado, parcela };
+},
+    calculoSimples() {
+      const valorInicial: number = Number(this.pedido.valorDoc);
+  const jurosInt: number = Number(this.pedido.juros);
+  const quantidade: number = Number(this.pedido.quantidade);
+  const jurosDecimal: number = jurosInt / 100.0;
+  if (isNaN(valorInicial) || isNaN(jurosInt) || isNaN(quantidade)) {
+    console.error('Valores inválidos para cálculo.');
+    return { parcela: 0, total: 0 }; // Retorna valores padrão ou vazios
+  }
+  const valorJuros: number = valorInicial * jurosDecimal;
+  const parcela: number = valorJuros + (valorInicial / quantidade);
+  const total: number = parcela * quantidade;
+
+  return { parcela, total };
+}
   }
 });
 </script>
