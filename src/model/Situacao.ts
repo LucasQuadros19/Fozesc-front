@@ -1,3 +1,3 @@
 export enum Situacao{
-    situacao
+    Pendente,Cobrado,Juridico,Cobrar
 }

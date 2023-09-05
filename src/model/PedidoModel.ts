@@ -18,5 +18,6 @@ export class PedidoModel extends AbstractEntity {
     destino!:Destino
     situacao!:Situacao
     observacao!:String
+    aprovacao!:boolean
     parcelas!:HistoricoModel[]
 }

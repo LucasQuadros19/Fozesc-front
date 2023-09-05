@@ -6,4 +6,6 @@ export class PessoaModel extends AbstractEntity {
     numeroDoc!:String
     banco!:Bancos
     permissao!: boolean
+    limite!:Number
+    
 }

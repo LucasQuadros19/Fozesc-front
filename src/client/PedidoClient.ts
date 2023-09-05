@@ -10,9 +10,17 @@ class PedidoClient {
       headers: { 'Content-type': 'application/json' }
     });
   }
+
   public async findById(id: number): Promise<PedidoModel> {
     try {
       return (await this.axiosClient.get<PedidoModel>(`/lista/id/${id}`)).data;
+    } catch (error: any) {
+      return Promise.reject(error.response);
+    }
+  }
+  public async listaAllAtivo(): Promise<any> {
+    try {
+      return (await this.axiosClient.get<PedidoModel[]>(`/lista/ativo/true`)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -32,23 +40,23 @@ class PedidoClient {
     }
   }
 
-  public async cadastrarComposto(cadastro: PedidoModel): Promise<string> {
+  public async cadastrarComposto(cadastro: PedidoModel): Promise<PedidoModel> {
     try {
-      return (await this.axiosClient.post<string>(`/cadastrar/composto`, cadastro)).data;
+      return (await this.axiosClient.post<PedidoModel>(`/cadastrar/composto`, cadastro)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
   }
   public async cadastroSimples(cadastro: PedidoModel): Promise<string> {
     try {
-      return (await this.axiosClient.post<string>(`/cadastra/simples`, cadastro)).data;
+      return (await this.axiosClient.post<string>(`/cadastrar/simples`, cadastro)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
   }
   public async cadastroDiario(cadastro: PedidoModel): Promise<string> {
     try {
-      return (await this.axiosClient.post<string>(`/cadastra/diario`, cadastro)).data;
+      return (await this.axiosClient.post<string>(`/cadastrar/diario`, cadastro)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
@@ -61,14 +69,15 @@ class PedidoClient {
       return Promise.reject(error.response);
     }
   }
-
-  public async excluir(id: number): Promise<string> {
+  
+    public async excluir(id: number): Promise<string> {
     try {
       return (await this.axiosClient.delete<string>(`/delete/${id}`)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }
   }
+  
 }
 
 export default new PedidoClient();

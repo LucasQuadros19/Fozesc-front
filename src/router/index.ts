@@ -13,7 +13,7 @@ const routes: Array<RouteRecordRaw> = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Pedido/AboutView.vue')
   },
   {
     path: '/informacoesView',
@@ -25,7 +25,35 @@ const routes: Array<RouteRecordRaw> = [
     path: '/pessoaForm',
     name: 'pessoaForm',
 
-    component: () => import('../views/PessoaFormView.vue')
+    component: () => import('../views/Pessoa/PessoaForm.vue')
+  },{
+    path: '/pedidoForm',
+    name: 'pedidoForm',
+
+    component: () => import('../views/Pedido/PedidoForm.vue'),
+    children:[{
+      path: '/pedidoForm',
+    name: 'pedidoForm-diario-view',
+
+    component: () => import('../views/Pedido/PedidoForm.vue')
+    },{
+      path: '/pedidoForm',
+    name: 'pedidoForm-composto-view',
+
+    component: () => import('../views/Pedido/PedidoForm.vue')
+    },{
+      path: '/pedidoForm',
+    name: 'pedidoForm-simples-view',
+
+    component: () => import('../views/Pedido/PedidoForm.vue')
+    }]
+  },
+
+  {
+    path: '/pessoas',
+    name: 'pessoas',
+
+    component: () => import('../views/Pessoa/PessoaView.vue')
   },
   {
     path: '/operacaoView',

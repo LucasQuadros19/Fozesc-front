@@ -1,3 +1,3 @@
 export enum Destino{
-    destino
+    pix, banco
 }

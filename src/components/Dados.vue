@@ -13,57 +13,66 @@
   
       <div class="row">
         <div class="col-md-12">
-          <table class="table">
-            <thead class="table-secondary">
+          <table class=" carder table table-borderless ">
+  <thead>
     <tr>
-      <th scope="col">ID</th>
-      <th scope="col" class="text-end">Vencimento</th>
-      <th scope="col" class="text-start">Nome</th>
-      <th scope="col" class="text-end">№Doc</th>
-      <th scope="col" class="text-start">Banco</th>
-      <th scope="col" class="text-start">Situação</th>
-      <th scope="col" class="text-start">Observacao</th>
-      <th scope="col">Ativo</th>
-      <th scope="col">Opção</th>
-      <th scope="col">idid</th>
+      <th>ID</th>
+      <th>Vencimento</th>
+      <th>Nome do Cliente</th>
+      <th>Número do Documento</th>
+      <th>Banco</th>
+      <th>Situação</th>
+      <th>Observação</th>
+      <th>total</th>
+      <th>Status</th>
+      <th>Ações</th>
     </tr>
   </thead>
-  
-  
-  
-  <tbody v-for="item in List" :key="item.id" class="table-group-divider">
-    <tr>
+  <tbody v-for="item in List" :key="item.id" class="btn:hover">
+    <tr class=" card-hover fundo">
       <td>{{ item.id }}</td>
-      <td>{{ item.vencimento }}</td>
+      <td>{{ item.cadastro }}</td>
       <td class="text-start">{{ item.cliente.nome}}</td>
       <td class="text-end">{{ item.cliente.numeroDoc }}</td>
       <td class="text-start">{{ item.cliente.banco }}</td>
       <td class="text-start">{{ item.situacao }}</td>
       <td class="text-start">{{ item.observacao }}</td>
-              <td>
+      <td class="text-start">{{ item.total.toFixed(2) }}</td>
+
+      <td>
         <span v-if="item.ativo" class="badge text-bg-success"> Ativo </span>
         <span v-if="!item.ativo" class="badge text-bg-danger"> Inativo </span>
       </td>
       <td class="text-start">
-
-<div class="btn-group" role="group" aria-label="Basic mixed styles example">
-
-<router-link
-type="button"
-class=""
-:to="{ name: 'operacaoView', query: {id: item.id} }"
->
-historico
-</router-link>
-</div>
-
-</td>
-      
-      
+        <div class="btn-group" role="group" aria-label="Basic mixed styles example">
+          <router-link
+            type="button"
+            class="btn btn-sm btn-info" 
+            :to="{ name: 'operacaoView', query: {id: item.id} }"
+          >
+            Historico
+          </router-link>
+          <router-link 
+            type="button" 
+            class="btn btn-sm btn-warning" 
+            :to="{ name: 'operacaoView', query: {id: item.id} }"
+          > 
+            Editar
+          </router-link>
+          <router-link 
+            type="button" 
+            class="btn btn-sm btn-danger" 
+            :to="{ name: 'operacaoView', query: {id: item.id} }"
+          >
+            Excluir
+          </router-link>
+        </div>
+      </td>
     </tr>
   </tbody>
-  
-          </table>
+</table>
+
+
         </div>
       </div>
     </div>
@@ -87,7 +96,7 @@ historico
     },
     methods: {
       findAll() {
-        PedidoClient.listaAll()
+        PedidoClient.listaAllAtivo()
           .then(success => {
             this.List = success;
           })
@@ -98,11 +107,37 @@ historico
     }
   });
   </script>
-  <style scoped>
-  .bi {
-    background-color: #2b882b;
-  }
-  </style>
+
+
+ <style scoped>
+ .card-hover:hover {
+   transform: scale(1.02);
+   box-shadow: 1px 1px 6px rgb(148, 173, 193);
+   
+ }
+ 
+
+ .carder {
+   border: none;
+   border-radius: 1vh;
+   overflow: hidden; 
+   box-shadow: 1px 1px 6px rgb(148, 173, 193);
+ }
+ 
+ tr:nth-child(odd) {
+	background-color:#ffffff;
+	}
+	tr:nth-last-child(even) {
+	background-color:#9b4646;
+	}
+ 
+
+ 
+ 
+
+ 
+ 
+ </style>
 
 
   

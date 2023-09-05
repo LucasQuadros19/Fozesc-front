@@ -1,3 +1,3 @@
 export enum Forma{
-    forma
+    Deposito,Pix,Cheque
 }

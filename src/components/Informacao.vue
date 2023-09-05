@@ -64,13 +64,23 @@
                     <td ><span class="badge text-bg-success"> {{item.ativo}} </span></td>
                     <div class="btn-group" role="group" aria-label="Basic mixed styles example">
 
-                      <router-link
-                      type="button"
-                      class=""
-                      :to="{ name: 'operacaoView', query: {id: item.id} }"
-                      >
-                      opcao
-                      </router-link>
+                  
+
+                  <router-link
+                  type="button"
+                  class="btn btn-sm btn-info" 
+                  :to="{ name: 'operacaoView', query: {id: item.id} }"
+                  >
+                  opcao
+                  </router-link>
+                  <router-link type="button" class="btn btn-sm btn-warning" 
+                  :to="{ name: 'operacaoView', query: {id: item.id} }"> 
+                    Editar
+                  </router-link>
+                  <router-link type="button" class="btn btn-sm btn-danger" 
+                  :to="{ name: 'operacaoView', query: {id: item.id} }">
+                    Excluir
+                  </router-link>
                       </div>
                                           
                   </tr>
