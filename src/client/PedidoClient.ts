@@ -47,9 +47,9 @@ class PedidoClient {
       return Promise.reject(error.response);
     }
   }
-  public async cadastroSimples(cadastro: PedidoModel): Promise<string> {
+  public async cadastroSimples(cadastro: PedidoModel): Promise<PedidoModel> {
     try {
-      return (await this.axiosClient.post<string>(`/cadastrar/simples`, cadastro)).data;
+      return (await this.axiosClient.post<PedidoModel>(`/cadastrar/simples`, cadastro)).data;
     } catch (error: any) {
       return Promise.reject(error.response);
     }

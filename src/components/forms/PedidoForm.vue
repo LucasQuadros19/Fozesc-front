@@ -107,10 +107,17 @@
         <div class="card bg-light mb-3" style="max-width: 18rem;">
  
   <div class="card-body">
+    <p v-if="form === 'composto'"  class=" letra1 card-title">R${{calculoComposto().valorInicial.toFixed(2)}}+R${{calculoComposto().juros.toFixed(2)}}</p>
     <h5 v-if="form === 'composto'"  class="card-title">Total=R${{calculoComposto().resultado.toFixed(2)}}</h5>
-    <p v-if="form === 'composto'"  class="card-text">Parcela=R${{calculoComposto().parcela.toFixed(2)}}</p>
+    <p  v-if="form === 'composto'"  class=" card-text">Parcela=R${{calculoComposto().parcela.toFixed(2)}}
+      x{{calculoComposto().quantidade}}</p>
+
+
+      <p v-if="form === 'simples'"  class=" letra1 card-title">R${{calculoSimples().valorInicial.toFixed(2)}}+R${{calculoSimples().juros.toFixed(2)}}</p>
+    
     <h5  v-if="form === 'simples'" class="card-title">Total=R${{calculoSimples().total.toFixed(2)}}</h5>
-    <p  v-if="form === 'simples'" class="card-text">Parcela=R${{calculoSimples().parcela.toFixed(2)}}</p>
+    <p  v-if="form === 'simples'" class="card-text">Parcela=R${{calculoSimples().parcela.toFixed(2)}}
+      x{{calculoSimples().quantidade}}</p>
   </div>
 </div>
 </div>
@@ -133,10 +140,9 @@
     </div>
   </template>
 
-  
-  
-
 <script lang="ts">
+
+
 import PedidoClient from '@/client/PedidoClient';
 import { PedidoModel } from '@/model/PedidoModel';
 import { HistoricoModel } from '@/model/HistoricoModel';
@@ -195,7 +201,6 @@ export default defineComponent({
   methods: {
     onClickCadastrarComposto() {
 
-
         this.pedido.parcelas = [];
         for(let i=0; i<this.pedido.quantidade;i++){
           let parcela = new HistoricoModel();
@@ -220,12 +225,28 @@ export default defineComponent({
           this.mensagem.css = "alert alert-danger alert-dismissible fade show";
         });
     },
-    onClickCadastrarSimples() {
+    onClickCadastrarSimples() { 
+
+      this.pedido.parcelas = []; // Inicialize this.pedido.parcelas como um array vazio
+for (let i = 0; i < this.pedido.quantidade; i++) {
+  let parcela = new HistoricoModel();
+  let data = new Date();
+  data.setMonth(data.getMonth() + i + 1);
+  parcela.proxPgamaneto = data;
+
+  // Defina o relacionamento com o pedido
+  parcela.operacao = this.pedido; // Use parcela.operacao para definir o relacionamento
+
+  this.pedido.parcelas.push(parcela);
+  console.log(parcela);
+}
+
+
         PedidoClient.cadastroSimples(this.pedido)
         .then(success => {
           this.pedido = new PedidoModel();
           this.mensagem.ativo = true;
-          this.mensagem.mensagem = success;
+          this.mensagem.mensagem = "sucesso";
           this.mensagem.titulo = "Parabéns. ";
           this.mensagem.css = "alert alert-success alert-dismissible fade show";
         })
@@ -325,39 +346,66 @@ export default defineComponent({
   let jurosInt: number = Number(this.pedido.juros);
   let quantidade: number = Number(this.pedido.quantidade);
   let jurosDecimal: number = jurosInt / 100.0;
-  let resultado: number = valorInicial;
-  
+  let resultado: number;
+
   if (isNaN(valorInicial) || isNaN(jurosInt) || isNaN(quantidade)) {
     console.error('Valores inválidos para cálculo.');
-    return { resultado: 0, parcela: 0 }; 
+    return { resultado: 0, parcela: 0, quantidade: 0, juros: 0, valorInicial: 0 };
   }
 
-  for (let i: number = 0; i < quantidade; i++) {
-    let valorJuros: number = resultado * jurosDecimal;
-    resultado = resultado + valorJuros;
-    console.log(resultado);
+  if (String(this.pedido.formaPaga) == "Cheque") {
+    resultado = 0;
+    console.log(valorInicial);
+    valorInicial = valorInicial/quantidade;
+    console.log("cada chquue"+valorInicial);
+    for (let i: number = 0; i < quantidade; i++) {
+    let valorCheque:number = valorInicial / ((i+1) + jurosDecimal);  
+    resultado=resultado + valorCheque;
+    console.log(resultado+" chuqe=" +(i+1));
+    }
+  } else {
+    resultado = valorInicial;
+    for (let i: number = 0; i < quantidade; i++) {
+      let valorJuros: number = resultado * jurosDecimal;
+      resultado = resultado + valorJuros;
+      console.log(resultado);
+    }
   }
 
-  let parcela = resultado/quantidade;
-  
+  let juros = resultado - valorInicial;
+  let parcela = resultado / quantidade;
 
-  return { resultado, parcela };
+  return { resultado, parcela, quantidade, juros, valorInicial };
 },
     calculoSimples() {
       const valorInicial: number = Number(this.pedido.valorDoc);
   const jurosInt: number = Number(this.pedido.juros);
   const quantidade: number = Number(this.pedido.quantidade);
   const jurosDecimal: number = jurosInt / 100.0;
+  let juros:number;
   if (isNaN(valorInicial) || isNaN(jurosInt) || isNaN(quantidade)) {
     console.error('Valores inválidos para cálculo.');
-    return { parcela: 0, total: 0 }; // Retorna valores padrão ou vazios
+    return { parcela: 0, total: 0 ,quantidade: 0, valorInicial:0,juros:0 }; 
   }
   const valorJuros: number = valorInicial * jurosDecimal;
   const parcela: number = valorJuros + (valorInicial / quantidade);
-  const total: number = parcela * quantidade;
 
-  return { parcela, total };
+
+
+  const total: number = parcela * quantidade;
+  juros = total - valorInicial;
+
+  return { parcela, total,quantidade,valorInicial,juros};
 }
   }
 });
 </script>
+
+
+<style scoped>
+.letra1{
+  font-size: 15px;
+  color: rgb(0, 99, 0);
+}
+</style>
+

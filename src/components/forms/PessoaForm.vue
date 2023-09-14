@@ -16,43 +16,68 @@
         <form>
           <div class="mb-3 ">
             <div class="row justify-content-center ">
-              <div class="col-md-4 mb-3">
+              <div class="col-md-8 mb-3">
                 <input type="text" placeholder="Nome" aria-label="Nome" :disabled="form === 'excluir' ? disabled : false" class="form-control" v-model="pessoa.nome">
               </div>
-              <div class="col-md-4 mb-3">
-                <input type="text" placeholder="Cpf/Cnpj" aria-label="Cpf/Cnpj" :disabled="form === 'excluir' ? disabled : false" class="form-control" v-model="pessoa.cpfCnpj">
-              </div>
+             
             </div>
             <div class="row justify-content-center ">
-              <div class="col-md-4 mb-3">
-                <input type="text" placeholder="Limite" aria-label="Limite" :disabled="form === 'excluir' ? disabled : false" class="form-control" v-model="pessoa.limite">
+              <div class="col-md-3 mb-3">
+                <input type="text" placeholder="RG" aria-label="Limite" :disabled="form === 'excluir' ? disabled : false" class="form-control" v-model="pessoa.rg">
               </div>
-              <div class="col-md-4 mb-3">
-
-       
-
-              <select required class="form-control" id="aprovacao" name="aprovacao" v-model="pessoa.permissao">
-                <option selected value="undefined">escolha a permissao</option>
-                <option value="true">Sim</option>
-                <option value="false">Não</option>
-              </select>
-                                
+              <div class="col-md-3 mb-3">
+                <input type="text" placeholder="CPF" aria-label="Taxa" :disabled="form === 'excluir' ? disabled : false" class="form-control" v-model="pessoa.cpf">
+              </div>
+              <div class="col-md-2 mb-3">
+                <input type="text" placeholder="N doc" aria-label="N doc" :disabled="form === 'excluir' ? disabled : false" class="form-control" v-model="pessoa.numeroDoc" > 
               </div>
             </div>
           </div>
           <div class="mb-3">
             <div class="row justify-content-center">
-              <div class="col-md-4 mb-3">
-                <input type="text" placeholder="N doc" aria-label="N doc" :disabled="form === 'excluir' ? disabled : false" class="form-control" v-model="pessoa.numeroDoc"> </div>
-              <div class="col-md-4 mb-3">
+             
+              <div class="col-md-3 mb-3">
                 <select class="form-select" placeholder="N doc" v-model="pessoa.banco">
                   <option value="undefined">escolha o Banco</option>
           <option v-for="bancos in Banco" :key="bancos" :value="bancos">{{ bancos }}</option>
         </select>
               </div>
+              <div class="col-md-3 mb-3">
+                <select class="form-select" placeholder="situacao" v-model="pessoa.situacao">
+                  <option value="undefined">situacao</option>
+          <option v-for="bancos in Banco" :key="bancos" :value="bancos">{{ bancos }}</option>
+        </select>
+              </div>
+              <div class="col-md-2 mb-3">
+                <input type="text" placeholder="Taxa" aria-label="Taxa" :disabled="form === 'excluir' ? disabled : false" class="form-control" v-model="pessoa.taxa">
+              </div>
+              
               
             </div>
           </div>
+          <div class="mb-3">
+  <div class="row justify-content-center">
+    <div class="col-md-4 mb-3">
+      <input type="text" placeholder="Cidade" aria-label="Cidade" class="form-control" v-model="pessoa.cidade">
+    </div>
+    <div class="col-md-4 mb-3">
+      <input type="text" placeholder="Bairro" aria-label="Bairro" class="form-control" v-model="pessoa.bairro">
+    </div>
+  </div>
+</div>
+<div class="mb-3">
+  <div class="row justify-content-center">
+    <div class="col-md-4 mb-3">
+      <input type="text" placeholder="Rua" aria-label="Cidade" class="form-control" v-model="pessoa.rua  ">
+    </div>
+    <div class="col-md-2 mb-3">
+      <input type="text" placeholder="Numero" aria-label="Bairro" class="form-control" v-model="pessoa.numero">
+    </div>
+    <div class="col-md-2 mb-3">
+      <input type="text" placeholder="Cep" aria-label="Bairro" class="form-control" v-model="pessoa.cep">
+    </div>
+  </div>
+</div>
         </form>
       </div>
     </div>

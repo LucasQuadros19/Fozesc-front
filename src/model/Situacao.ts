@@ -1,3 +1,5 @@
-export enum Situacao{
-    Pendente,Cobrado,Juridico,Cobrar
+import { AbstractEntity } from "./AbstractEntity"
+
+export class Situacao extends AbstractEntity{
+    situacao!:String;
 }

@@ -6,7 +6,6 @@
         <div class="col-md-1">
           <div class="d-grid gap-2">
             
-
           </div>
         </div>
       </div>
@@ -14,20 +13,7 @@
       <div class="row">
         <div class="col-md-12">
           <table class=" carder table table-borderless ">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Vencimento</th>
-      <th>Nome do Cliente</th>
-      <th>Número do Documento</th>
-      <th>Banco</th>
-      <th>Situação</th>
-      <th>Observação</th>
-      <th>total</th>
-      <th>Status</th>
-      <th>Ações</th>
-    </tr>
-  </thead>
+ 
   <tbody v-for="item in List" :key="item.id" class="btn:hover">
     <tr class=" card-hover fundo">
       <td>{{ item.id }}</td>
