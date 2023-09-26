@@ -1,14 +1,14 @@
 <template>
     <div>
       <div class="botao btn-group" role="group" aria-label="Basic mixed styles example">
-        <router-link class="btn btn-light" :to="{ name: 'pedidoForm-simples-view', query: { form: 'simples' } } ">
-          Simples
+        <router-link class="btn btn-light" :to="{ name: 'pedidoForm-simples-view', query: { form: 'Cheque' } } ">
+          Cheque
         </router-link>
-        <router-link class="btn btn-light" :to="{ name: 'pedidoForm-composto-view', query: { form: 'composto' } } ">
-          Composto
+        <router-link class="btn btn-light" :to="{ name: 'pedidoForm-composto-view', query: { form: 'Promissoria' } } ">
+          Promissoria
         </router-link>
-        <router-link class="btn btn-light" :to="{ name: 'pedidoForm-diario-view', query: { form: 'diario' } } ">
-          Diário
+        <router-link class="btn btn-light" :to="{ name: 'pedidoForm-diario-view', query: { form: 'Cartao' } } ">
+          Cartao
         </router-link>
       </div>
       <PedidoForm />
